@@ -67,16 +67,24 @@ describe("Mutate.point", function() {
 describe("Mutate.insert", function() {
 
   var mut = new $gene.Mutate();
-  it("returns an insertion of fragment of given sequence (seq + fragment + uence)", function() {
-    expect(mut.insert("AAAAAAAAA")).toMatch(/[A]*/);
-    expect(mut.insert("DGDGD")).toMatch(/[DG]*/);
-    //expect(mut.point("AA","B")).toMatch(/[AB][AB]/);
-    //expect(mut.point("AA","BC")).toMatch(/[ABC][ABC]/);
-    //expect(mut.point("ABCD", "G")).toMatch(/[AG][BG][CG][DG]/);
+  it("returns a random insertion of fragment of given sequence (seq + fragment + uence)", function() {
+    spyOn(Math, "random").and.returnValue(0.9);
+    expect(mut.insert("AAAAAA")).toBe("AAAAAA");
+    expect(mut.insert("DGDGD")).toBe("DGDGD");
   });
 });
 
 
+
+describe("Mutate.sliceSeq", function() {
+
+  var mut = new $gene.Mutate();
+  it("returns insertion of given fragment into given sequence at random index of sequence", function() {
+    spyOn(Math, "random").and.returnValue(0.3);
+    expect(mut.sliceSeq("AAAAAAAAA", "BBB")).toBe("AABBBAAAAAAA");
+    
+  });
+});
 
 
 
