@@ -45,8 +45,9 @@ describe("Mutate.point", function() {
   var mut = new $gene.Mutate();
   it("given a symbol array and sequence, it causes a point mutation", function() {
     expect(mut.point("AB","B")).toMatch(/[AB]B/);
-    //expect($gene.Mutate.point("AA","B")).toMatch(/[AB][AB]/);
-    //expect($gene.Mutate.point("AA","BC")).toMatch(/[ABC][ABC]/);
+    expect(mut.point("AA","B")).toMatch(/[AB][AB]/);
+    expect(mut.point("AA","BC")).toMatch(/[ABC][ABC]/);
+    expect(mut.point("ABCD", "G")).toMatch(/[AG][BG][CG][DG]/);
   });
 });
 
