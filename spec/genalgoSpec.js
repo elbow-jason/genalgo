@@ -1,18 +1,3 @@
-//$pg.Sequence function tests follow
-
-describe("Organism.addChr", function() {
-  var rabbit;
-
-  beforeEach(function() {
-    rabbit = new $gene.Organism('AASSDDFF');
-    rabbit.addChr('FFSSDDAA');
-  });
-
-  it("adds sequences to $gene.Organism.chromosomes", function() {
-    expect(rabbit.chromosomes[0]).toBe('AASSDDFF');
-    expect(rabbit.chromosomes[1]).toBe('FFSSDDAA');
-  });
-});
 
 describe(".ranAddr", function() {
 
@@ -21,9 +6,6 @@ it("returns a random index from a given sequence or array" , function() {
     expect($gene.ranAddr([0,0,0,0,0])).toMatch(/[01234]/);
   });
 });
-
-
-
 
 describe(".torf", function() {
 
@@ -34,18 +16,6 @@ it("returns true or false at random (this test is for true)" , function() {
 it("returns true or false at random (this test is for true)" , function() {
     spyOn(Math, "random").and.returnValue(0.7);
     expect($gene.torf()).toBe(false);
-  });
-});
-
-
-describe("Mutate.point", function() {
-
-  var mut = new $gene.Mutate();
-  it("given a symbol array and sequence, it causes a point mutation", function() {
-    expect(mut.point("AB","B")).toMatch(/[AB]B/);
-    expect(mut.point("AA","B")).toMatch(/[AB][AB]/);
-    expect(mut.point("AA","BC")).toMatch(/[ABC][ABC]/);
-    expect(mut.point("ABCD", "G")).toMatch(/[AG][BG][CG][DG]/);
   });
 });
 
@@ -64,6 +34,50 @@ describe(".randomSeq", function(){
     expect($gene.randomSeq(4, "A")).toBe("AAAA");
   });
 });
+
+
+describe("Organism.addChr", function() {
+  var rabbit;
+
+  beforeEach(function() {
+    rabbit = new $gene.Organism('AASSDDFF');
+    rabbit.addChr('FFSSDDAA');
+  });
+
+  it("adds sequences to $gene.Organism.chromosomes", function() {
+    expect(rabbit.chromosomes[0]).toBe('AASSDDFF');
+    expect(rabbit.chromosomes[1]).toBe('FFSSDDAA');
+  });
+});
+
+
+
+describe("Mutate.point", function() {
+
+  var mut = new $gene.Mutate();
+  it("given a symbol array and sequence, it causes a point mutation", function() {
+    expect(mut.point("AB","B")).toMatch(/[AB]B/);
+    expect(mut.point("AA","B")).toMatch(/[AB][AB]/);
+    expect(mut.point("AA","BC")).toMatch(/[ABC][ABC]/);
+    expect(mut.point("ABCD", "G")).toMatch(/[AG][BG][CG][DG]/);
+  });
+});
+
+
+describe("Mutate.insert", function() {
+
+  var mut = new $gene.Mutate();
+  it("returns an insertion of fragment of given sequence (seq + fragment + uence)", function() {
+    expect(mut.insert("AAAAAAAAA")).toMatch(/[A]*/);
+    expect(mut.insert("DGDGD")).toMatch(/[DG]*/);
+    //expect(mut.point("AA","B")).toMatch(/[AB][AB]/);
+    //expect(mut.point("AA","BC")).toMatch(/[ABC][ABC]/);
+    //expect(mut.point("ABCD", "G")).toMatch(/[AG][BG][CG][DG]/);
+  });
+});
+
+
+
 
 
 
