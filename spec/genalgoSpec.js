@@ -2,18 +2,21 @@
 describe(".ranAddr", function() {
 
 it("returns a random index from a given sequence or array" , function() {
-    expect($gene.ranAddr("AAAA")).toMatch(/[0123]/);
-    expect($gene.ranAddr([0,0,0,0,0])).toMatch(/[01234]/);
+    spyOn(Math, "random").and.returnValue(0.01);
+    expect($gene.ranAddr("AAAA")).toBe(0);
+    expect($gene.ranAddr([0,0,0])).toBe(0);
+    expect($gene.ranAddr([1])).toBe(0);
   });
 });
 
 describe(".torf", function() {
 
-it("returns true or false at random (this test is for true)" , function() {
+  it("returns true or false at random (this test is for true)" , function() {
     spyOn(Math, "random").and.returnValue(0.3);
     expect($gene.torf()).toBe(true);
-});
-it("returns true or false at random (this test is for true)" , function() {
+  });
+
+  it("returns true or false at random (this test is for true)" , function() {
     spyOn(Math, "random").and.returnValue(0.7);
     expect($gene.torf()).toBe(false);
   });
@@ -32,6 +35,22 @@ describe(".randomSeq", function(){
 
   it("returns a random sequence given a desired length and a codex of available characters", function(){
     expect($gene.randomSeq(4, "A")).toBe("AAAA");
+  });
+});
+
+describe(".randReverse", function() {
+
+it("returns a given sequence in reverse or forward, randomly (0.9)", function() {
+    spyOn(Math, "random").and.returnValue(0.9);
+    expect($gene.randReverse("ABCD")).toBe("ABCD");
+    expect($gene.randReverse("XYZ")).toBe("XYZ");
+  });
+
+
+it("returns a given sequence in reverse or forward, randomly (0.9)", function() {
+    spyOn(Math, "random").and.returnValue(0.3);
+    expect($gene.randReverse("ABCD")).toBe("DCBA");
+    expect($gene.randReverse("XYZ")).toBe("ZYX");
   });
 });
 
@@ -55,11 +74,13 @@ describe("Organism.addChr", function() {
 describe("Mutate.point", function() {
 
   var mut = new $gene.Mutate();
+
   it("given a symbol array and sequence, it causes a point mutation", function() {
-    expect(mut.point("AB","B")).toMatch(/[AB]B/);
-    expect(mut.point("AA","B")).toMatch(/[AB][AB]/);
-    expect(mut.point("AA","BC")).toMatch(/[ABC][ABC]/);
-    expect(mut.point("ABCD", "G")).toMatch(/[AG][BG][CG][DG]/);
+    spyOn(Math, "random").and.returnValue(0.01);
+    expect(mut.point("AB","B")).toBe("BB");
+    expect(mut.point("AA","B")).toBe("BA");
+    expect(mut.point("AA","CBA")).toBe("CA");
+    expect(mut.point("ABCD", "G")).toBe("GBCD");
   });
 });
 
@@ -67,10 +88,17 @@ describe("Mutate.point", function() {
 describe("Mutate.insert", function() {
 
   var mut = new $gene.Mutate();
+
+    it("returns a random insertion of fragment of given sequence (seq + fragment + uence)", function() {
+    expect(mut.insert("AA")).toMatch(/^[A]{2,4}$/);
+    expect(mut.insert("DGDGD")).toMatch(/^[DG]{5,10}$/);
+  });
+
+
   it("returns a random insertion of fragment of given sequence (seq + fragment + uence)", function() {
     spyOn(Math, "random").and.returnValue(0.9);
-    expect(mut.insert("AAAAAA")).toBe("AAAAAA");
-    expect(mut.insert("DGDGD")).toBe("DGDGD");
+    expect(mut.insert("AAAAAA")).toBe("AAAAAAA");
+    expect(mut.insert("DGDGD")).toBe("DGDGDD");
   });
 });
 
@@ -82,114 +110,38 @@ describe("Mutate.sliceSeq", function() {
   it("returns insertion of given fragment into given sequence at random index of sequence", function() {
     spyOn(Math, "random").and.returnValue(0.3);
     expect(mut.sliceSeq("AAAAAAAAA", "BBB")).toBe("AABBBAAAAAAA");
-    
   });
 });
 
 
+describe("Mutate.fragment", function() {
 
-
-
-
-
-
-/*
-//.baseCount
-describe("Sequence.baseCount", function() {
-  var sequence;
-
-  beforeEach(function() {
-    sequence = new $pg.Sequence('AAAGGGGCCCCCTTTTTT', true);
+  var mut = new $gene.Mutate();
+    it("returns a random fragment, in reverse or forward, from a given sequence", function() {
+    expect(mut.fragment("QQ")).toMatch(/^[Q]{1,2}$/);
   });
 
-  it("returns the number of given bases in a given sequence", function() {
-    expect(sequence.baseCount(sequence.sequence, 'A')).toBe(3);
-    expect(sequence.baseCount(sequence.sequence, 'G')).toBe(4);
-    expect(sequence.baseCount(sequence.sequence, 'C')).toBe(5);
-    expect(sequence.baseCount(sequence.sequence, 'T')).toBe(6);
-    expect(sequence.baseCount(sequence.sequence, 'E')).toBe(0);
-  });
-});
 
-
-  // finds GC content of this
-  //should return a number between 0 and 1.
-  // e.g. given "GGCC" => 1.0
-        //given "GATC" => 0.5
-        //given "CCCC" => 1.0
-        //given "AATC" => 0.25
-  
-describe("Sequence.calcGCContent", function() {
-var sequence;
-
-it("returns the number of given bases in a given sequence", function() {
-  sequence = new $pg.Sequence('GGCC', true);
-  expect(sequence.calcGCContent(sequence.sequence, sequence.sumG, sequence.sumC)).toBe(1.0);
-  sequence = new $pg.Sequence('GATC', true);
-  expect(sequence.calcGCContent(sequence.sequence, sequence.sumG, sequence.sumC)).toBe(0.5);
-  sequence = new $pg.Sequence('CCCC', true);
-  expect(sequence.calcGCContent(sequence.sequence, sequence.sumG, sequence.sumC)).toBe(1.0);
-  sequence = new $pg.Sequence('AATC', true);
-  expect(sequence.calcGCContent(sequence.sequence, sequence.sumG, sequence.sumC)).toBe(0.25);
-  sequence = new $pg.Sequence('AATT', true);
-  expect(sequence.calcGCContent(sequence.sequence, sequence.sumG, sequence.sumC)).toBe(0.0);
-
-  });
-});
-
-describe(".getNNPairs", function() {
-
-it("returns an array of pairs of bases found in a given sequence", function() {
-    expect($pg.getNNPairs('ATGC')).toEqual(['AT','TG','GC']);
-    expect($pg.getNNPairs('A')).toBe(false);
-  });
-});
-
-//$pg helpers/library follows
-  //returns the complement of the param 'this' as this is presented. i.e. 
-  //  passed in = "ATTTTAGCGATCCC"
-  //  returned =  "TAAAATCGCTAGGG"
-  //  
-  // f_seq is for "forward sequence"
-describe(".genComplement", function() {
-
-  it("returns complement for given sequences", function() {
-    expect($pg.genComplement('ATTTTAGCGATCCC')).toBe('TAAAATCGCTAGGG');
+  it("returns a random fragment, in reverse or forward, from a given sequence", function() {
+    spyOn(Math, "random").and.returnValue(0.3);
+    expect(mut.fragment("QQ")).toBe("Q");
+    expect(mut.fragment("ASDF")).toBe("S");
   });
 
 });
 
+describe("Mutate.transpose", function() {
 
-  //returns the complement of the param 'this' as this is presented. i.e. 
-  //  passed in = "ATTTTAGCGATCCC"
-  //  returned =  "CCCTAGCGATTTTA"
-  //  
-  // f_seq is for "forward sequence"
-describe(".seqReverse", function() {
+  var mut = new $gene.Mutate();
+    it("returns a random fragment, in reverse or forward, from a given sequence", function() {
+    expect(mut.fragment("QQ")).toMatch(/^[Q]{1,2}$/);
+  });
 
-  it("returns the reverse of a given sequence", function() {
-    expect($pg.seqReverse('ATTTTAGCGATCCC')).toBe('CCCTAGCGATTTTA');
+
+  it("returns a random fragment, in reverse or forward, from a given sequence", function() {
+    spyOn(Math, "random").and.returnValue(0.3);
+    expect(mut.fragment("QQ")).toBe("Q");
+    expect(mut.fragment("ASDF")).toBe("S");
   });
 
 });
-
-
-
-describe(".genPrimer", function() {
-  var longSequence = "ATAGCATTTTTTCCCCCCCGGGGGGGAAAAACCCCCTCGACGATA";
-  var primerLength = 7;
-
-  it("returns the forward primer from the beginning region of a given sequence ", function() {
-    expect($pg.genPrimer(longSequence, 0, primerLength, true)).toBe('ATAGCAT');
-    expect($pg.genPrimer(longSequence, 0, primerLength, true)).toBe('ATAGCAT');
-    expect($pg.genPrimer(longSequence, 2, primerLength, true)).toBe('AGCATTT');
-  });
-  
-  it("returns the reverse primer from the ending region of a given sequence ", function() {
-    expect($pg.genPrimer(longSequence, 0, primerLength, false)).toBe('TATCGTC');
-  });
-
-});
-*/ 
-
-
