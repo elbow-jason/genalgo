@@ -38,8 +38,6 @@ it("returns true or false at random (this test is for true)" , function() {
 });
 
 
-
-
 describe("Mutate.point", function() {
 
   var mut = new $gene.Mutate();
@@ -52,12 +50,26 @@ describe("Mutate.point", function() {
 });
 
 
+describe(".genBasesObj", function() {
+  var func1;
+  var func2;
+  var func3;
+  it("returns an object to decode sequences into functions (ribosome)", function() {
+    expect($gene.genBasesObj("AB",["func1", "func2"])).toEqual({"A" : "func1", "B" : "func2"});
+
+  });
+});
+
+
+
+
+
+
+
+
+
+
 /*
-
-
-
-
-
 //.baseCount
 describe("Sequence.baseCount", function() {
   var sequence;
