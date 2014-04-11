@@ -23,18 +23,35 @@ it("returns a random index from a given sequence or array" , function() {
 });
 
 
-/*
-describe("Mutate.point", function() {
 
- it("given a symbol array and sequence, it causes a point mutation", function() {
-    expect($gene.Mutate.point("A","B")).toBe("B");
-    expect($gene.Mutate.point("AA","B")).toBe("AB" || "BA");
-    expect($gene.Mutate.point("AA","BC")).toBe("AB" || "AC" || "BA" || "CA");
+
+describe(".torf", function() {
+
+it("returns true or false at random (this test is for true)" , function() {
+    spyOn(Math, "random").and.returnValue(0.3);
+    expect($gene.torf()).toBe(true);
+});
+it("returns true or false at random (this test is for true)" , function() {
+    spyOn(Math, "random").and.returnValue(0.7);
+    expect($gene.torf()).toBe(false);
   });
 });
 
 
 
+
+describe("Mutate.point", function() {
+
+  var mut = new $gene.Mutate();
+  it("given a symbol array and sequence, it causes a point mutation", function() {
+    expect(mut.point("AB","B")).toMatch(/[AB]B/);
+    //expect($gene.Mutate.point("AA","B")).toMatch(/[AB][AB]/);
+    //expect($gene.Mutate.point("AA","BC")).toMatch(/[ABC][ABC]/);
+  });
+});
+
+
+/*
 
 
 
