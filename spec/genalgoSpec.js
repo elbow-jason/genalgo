@@ -14,8 +14,13 @@ describe("Organism.addChr", function() {
   });
 });
 
+describe(".ranAddr", function() {
 
-
+it("returns a random index from a given sequence or array" , function() {
+    expect($gene.ranAddr("AAAA")).toMatch(/[0123]/);
+    expect($gene.ranAddr([0,0,0,0,0])).toMatch(/[01234]/);
+  });
+});
 
 
 /*
