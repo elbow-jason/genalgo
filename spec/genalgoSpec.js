@@ -51,17 +51,19 @@ describe("Mutate.point", function() {
 
 
 describe(".genBasesObj", function() {
-  var func1;
-  var func2;
-  var func3;
+
   it("returns an object to decode sequences into functions (ribosome)", function() {
     expect($gene.genBasesObj("AB",["func1", "func2"])).toEqual({"A" : "func1", "B" : "func2"});
-
   });
 });
 
 
+describe(".randomSeq", function(){
 
+  it("returns a random sequence given a desired length and a codex of available characters", function(){
+    expect($gene.randomSeq(4, "A")).toBe("AAAA");
+  });
+});
 
 
 
