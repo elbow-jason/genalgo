@@ -133,15 +133,9 @@ describe("Mutate.fragment", function() {
 describe("Mutate.transpose", function() {
 
   var mut = new $gene.Mutate();
-    it("returns a random fragment, in reverse or forward, from a given sequence", function() {
-    expect(mut.fragment("QQ")).toMatch(/^[Q]{1,2}$/);
-  });
-
-
-  it("returns a random fragment, in reverse or forward, from a given sequence", function() {
+    it("given two sequences in an array [seq1, seq2], it will trade endcaps on the sequences and return an array", function() {
     spyOn(Math, "random").and.returnValue(0.3);
-    expect(mut.fragment("QQ")).toBe("Q");
-    expect(mut.fragment("ASDF")).toBe("S");
+    expect(mut.transpose(["QQ","AA"])).toBe(/^[Q]{1,2}$/);
   });
 
 });
