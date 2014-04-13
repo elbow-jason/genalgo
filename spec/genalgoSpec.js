@@ -1,11 +1,28 @@
+var tester = {};
+tester.helpers = new Helpers();
+
+
+
+
+
+describe("A suite is just a function", function() {
+  
+  it("and so is a spec", function() {
+    a = true;
+
+    expect(a).toBe(true);
+  });
+});
 
 describe(".ranAddr", function() {
+    var a;
+  it("returns a random index from a given sequence or array" , function() {
 
-it("returns a random index from a given sequence or array" , function() {
     spyOn(Math, "random").and.returnValue(0.01);
-    expect($gene.ranAddr("AAAA")).toBe(0);
-    expect($gene.ranAddr([0,0,0])).toBe(0);
-    expect($gene.ranAddr([1])).toBe(0);
+    expect(tester.helpers.ranAddr).toBeDefined();
+    expect(tester.helpers.ranAddr("AAAA")).toBe(0);
+    expect(tester.helpers.ranAddr([0,0,0])).toBe(0);
+    expect(tester.helpers.ranAddr([1])).toBe(0);
   });
 });
 
@@ -13,12 +30,12 @@ describe(".torf", function() {
 
   it("returns true or false at random (this test is for true)" , function() {
     spyOn(Math, "random").and.returnValue(0.3);
-    expect($gene.torf()).toBe(true);
+    expect(Helpers.torf()).toBe(true);
   });
 
   it("returns true or false at random (this test is for true)" , function() {
     spyOn(Math, "random").and.returnValue(0.7);
-    expect($gene.torf()).toBe(false);
+    expect(Helpers.torf()).toBe(false);
   });
 });
 
@@ -40,14 +57,14 @@ describe(".randomSeq", function(){
 
 describe(".randReverse", function() {
 
-it("returns a given sequence in reverse or forward, randomly (0.9)", function() {
+  it("returns a given sequence in reverse or forward, randomly (0.9)", function() {
     spyOn(Math, "random").and.returnValue(0.9);
     expect($gene.randReverse("ABCD")).toBe("ABCD");
     expect($gene.randReverse("XYZ")).toBe("XYZ");
   });
 
 
-it("returns a given sequence in reverse or forward, randomly (0.9)", function() {
+  it("returns a given sequence in reverse or forward, randomly (0.9)", function() {
     spyOn(Math, "random").and.returnValue(0.3);
     expect($gene.randReverse("ABCD")).toBe("DCBA");
     expect($gene.randReverse("XYZ")).toBe("ZYX");
@@ -89,7 +106,7 @@ describe("Mutate.insert", function() {
 
   var mut = new $gene.Mutate();
 
-    it("returns a random insertion of fragment of given sequence (seq + fragment + uence)", function() {
+  it("returns a random insertion of fragment of given sequence (seq + fragment + uence)", function() {
     expect(mut.insert("AA")).toMatch(/^[A]{2,4}$/);
     expect(mut.insert("DGDGD")).toMatch(/^[DG]{5,10}$/);
   });
@@ -117,7 +134,7 @@ describe("Mutate.sliceSeq", function() {
 describe("Mutate.fragment", function() {
 
   var mut = new $gene.Mutate();
-    it("returns a random fragment, in reverse or forward, from a given sequence", function() {
+  it("returns a random fragment, in reverse or forward, from a given sequence", function() {
     expect(mut.fragment("QQ")).toMatch(/^[Q]{1,2}$/);
   });
 
@@ -133,7 +150,7 @@ describe("Mutate.fragment", function() {
 describe("Mutate.transpose", function() {
 
   var mut = new $gene.Mutate();
-    it("given two sequences in an array [seq1, seq2], it will trade endcaps on the sequences and return an array", function() {
+  it("given two sequences in an array [seq1, seq2], it will trade endcaps on the sequences and return an array", function() {
     spyOn(Math, "random").and.returnValue(0.3);
     expect(mut.transpose(["QQ","AA"])).toBe(/^[Q]{1,2}$/);
   });
