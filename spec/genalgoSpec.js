@@ -95,11 +95,10 @@ describe("Mutate.point", function() {
   var mut = Mutate;
 
   it("given a symbol array and sequence, it causes a point mutation", function() {
-    spyOn(Math, "random").and.returnValue(0.01);
-    expect(mut.point("AB","B")).toBe("BB");
-    expect(mut.point("AA","B")).toBe("BA");
-    expect(mut.point("AA","CBA")).toBe("CA");
-    expect(mut.point("ABCD", "G")).toBe("GBCD");
+    expect(mut.point("AB","AB", 0, 1)).toBe("BB");
+    expect(mut.point("AA","AB", 0, 1)).toBe("BA");
+    expect(mut.point("AA","CBA",1, 0)).toBe("AC");
+    expect(mut.point("ABCD", "G", 0, 0)).toBe("GBCD");
   });
 });
 
