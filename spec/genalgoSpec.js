@@ -94,7 +94,6 @@ describe("Mutate.point", function() {
 
 describe("Mutate.insert", function() {
 
-
   it("returns a random insertion of fragment of given sequence (seq + fragment + uence)", function() {
     expect(mut.insert("AA", "BB", 1)).toBe("ABBA");
     expect(mut.insert("DDDD", "AA", 2)).toBe("DDAADD");
@@ -104,20 +103,17 @@ describe("Mutate.insert", function() {
 
 
 
-describe("Mutate.sliceSeq", function() {
-
-  var mut = Mutate();
+describe("Mutate.mutInsert", function() {
 
   it("returns insertion of given fragment into given sequence at random index of sequence", function() {
-    spyOn(Math, "random").and.returnValue(0.3);
-    expect(mut.sliceSeq("AAAAAAAAA", "BBB")).toBe("AABBBAAAAAAA");
+    expect(mut.mutInsert("AAAABAAAAA")).toMatch(/[AB]*/);
   });
 });
 
 
 describe("Mutate.fragment", function() {
 
-  var mut = Mutate();
+
   it("returns a random fragment, in reverse or forward, from a given sequence", function() {
     expect(mut.fragment("QQ")).toMatch(/^[Q]{1,2}$/);
   });
