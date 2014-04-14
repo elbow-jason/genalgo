@@ -16,7 +16,7 @@ describe("A suite is just a function", function() {
   });
 });
 
-describe(".ranAddr", function() {
+describe("Helpers.randIndex", function() {
 
   it("returns a random index from a given sequence or array" , function() {
 
@@ -28,7 +28,7 @@ describe(".ranAddr", function() {
   });
 });
 
-describe(".torf", function() {
+describe("Helpers.torf", function() {
 
   it("returns true or false at random (this test is for true)" , function() {
     spyOn(Math, "random").and.returnValue(0.3);
@@ -42,7 +42,7 @@ describe(".torf", function() {
 });
 
 
-describe(".genBasesObj", function() {
+describe("Helpers.genBasesObj", function() {
 
   it("returns an object to decode sequences into functions (ribosome)", function() {
     expect(helpers.genBasesObj("AB",["func1", "func2"])).toEqual({"A" : "func1", "B" : "func2"});
@@ -50,14 +50,14 @@ describe(".genBasesObj", function() {
 });
 
 
-describe(".randomSeq", function(){
+describe("Helpers.randSeq", function(){
 
   it("returns a random sequence given a desired length and a codex of available characters", function(){
-    expect(helpers.randomSeq(4, "A")).toBe("AAAA");
+    expect(helpers.randSeq(4, "A")).toBe("AAAA");
   });
 });
 
-describe(".randReverse", function() {
+describe("Helpers.randReverse", function() {
 
   it("returns a given sequence in reverse or forward, randomly (0.9)", function() {
     spyOn(Math, "random").and.returnValue(0.9);
@@ -78,11 +78,11 @@ describe("Organism.addChr", function() {
   var rabbit;
 
   beforeEach(function() {
-    rabbit = new helpers.Organism('AASSDDFF');
+    rabbit = new Organism('AASSDDFF');
     rabbit.addChr('FFSSDDAA');
   });
 
-  it("adds sequences to helpers.Organism.chromosomes", function() {
+  it("adds sequences to Organism.chromosomes", function() {
     expect(rabbit.chromosomes[0]).toBe('AASSDDFF');
     expect(rabbit.chromosomes[1]).toBe('FFSSDDAA');
   });
