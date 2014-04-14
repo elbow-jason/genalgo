@@ -164,3 +164,17 @@ describe("Mutate.fracture", function() {
     expect(mut.mutTranspose("ABCDEFG", "QRSTUVWXYZ")).toEqual([ "ABCDWXYZ", "QRSTUVEFG"]);
   });
 });
+
+
+describe("Sequence", function() {
+
+
+
+
+  it("generates new sequence objects", function() {
+    var chromo = new Sequence('AASSDDFF', 'chro1');
+    expect(chromo.sequence).toBe('AASSDDFF');
+    expect(chromo.seqLength)  .toBe(8);
+    expect(chromo.seqName)    .toBe('chro1');
+  });
+});
