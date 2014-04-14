@@ -113,26 +113,54 @@ describe("Mutate.mutInsert", function() {
 
 describe("Mutate.fragment", function() {
 
-
   it("returns a random fragment, in reverse or forward, from a given sequence", function() {
-    expect(mut.fragment("QQ")).toMatch(/^[Q]{1,2}$/);
+    expect(mut.fragment("QQQQQ", 0, 2)).toBe("QQ");
+    expect(mut.fragment("ABCDE", 0, 2)).toBe("AB");
+    expect(mut.fragment("JASONSTEST", 2,6)).toBe("SONS");
   });
 
 
   it("returns a random fragment, in reverse or forward, from a given sequence", function() {
-    spyOn(Math, "random").and.returnValue(0.3);
-    expect(mut.fragment("QQ")).toBe("Q");
-    expect(mut.fragment("ASDF")).toBe("S");
+    expect(mut.fragment("QQ", 1, 0)).toBe("Q");
+    expect(mut.fragment("ASDF", 2, 1)).toBe("S");
   });
 
+  it("returns a random fragment, in reverse or forward, from a given sequence", function() {
+    expect(mut.fragment("QQ", 1, 0)).toBe("Q");
+    expect(mut.fragment("ASDF", 2, 1)).toBe("S");
+  });
+
+  it("returns a random fragment, in reverse or forward, from a given sequence", function() {
+    expect(mut.fragment("QADSF", 0, 0)).toBe("Q");
+    expect(mut.fragment("ASDF", 1, 1)).toBe("S");
+  });
 });
 
 describe("Mutate.transpose", function() {
 
-  var mut = new helpers.Mutate();
-  it("given two sequences in an array [seq1, seq2], it will trade endcaps on the sequences and return an array", function() {
-    spyOn(Math, "random").and.returnValue(0.3);
-    expect(mut.transpose(["QQ","AA"])).toBe(/^[Q]{1,2}$/);
+  it("trades 'endcaps' on two sequences and return an array of the sequences", function() {
+    
+    expect(mut.transpose("QQ","AA", "PP", "EE")).toEqual(["QQAA", "PPEE"]);
+  });
+});
+
+describe("Mutate.fracture", function() {
+
+  it("fractures a sequence and returns an array of the two broken pieces", function() {
+    expect(mut.fracture("QQAAA", 2)).toEqual(["QQ", "AAA"]);
+  });
+});
+
+
+describe("Mutate.fracture", function() {
+
+  it("fractures a sequence and returns an array of the two broken pieces", function() {
+    spyOn(Math, "random").and.returnValue(0.6);
+    expect(mut.mutTranspose("QQ", "AA")).toEqual([ "QA", "AQ"]);
   });
 
+  it("fractures a sequence and returns an array of the two broken pieces", function() {
+    spyOn(Math, "random").and.returnValue(0.6);
+    expect(mut.mutTranspose("ABCDEFG", "QRSTUVWXYZ")).toEqual([ "ABCDWXYZ", "QRSTUVEFG"]);
+  });
 });
