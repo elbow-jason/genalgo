@@ -74,12 +74,12 @@ describe("Helpers.randReverse", function() {
 });
 
 
-describe("Organism.addChr", function() {
+describe("Organism.addChromosome", function() {
   var rabbit;
 
   beforeEach(function() {
     rabbit = new Organism('AASSDDFF');
-    rabbit.addChr('FFSSDDAA');
+    rabbit.addChromosome('FFSSDDAA');
   });
 
   it("adds sequences to Organism.chromosomes", function() {
