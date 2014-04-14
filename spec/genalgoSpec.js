@@ -4,7 +4,8 @@
 // run `nodejs debug genalgo-app.js`
 // run `node-inspector`
 
-var gene = require(process.cwd() + '/lib/genalgo-app.js');
+if(typeof require !== "undefined") {var gene = require(process.cwd() + '/lib/genalgo-app.js');}
+
 
 describe("A suite is just a function", function() {
   
@@ -19,11 +20,11 @@ describe(".ranAddr", function() {
 
   it("returns a random index from a given sequence or array" , function() {
 
-    spyOn(Math, "random").andReturn(0.01);
-    expect(gene.ranAddr).toBeDefined();
-    expect(gene.ranAddr("AAAA")).toBe(0);
-    expect(gene.ranAddr([0,0,0])).toBe(0);
-    expect(gene.ranAddr([1])).toBe(0);
+    spyOn(Math, "random").and.returnValue(0.1);
+    
+    expect(Helpers.randIndex("AAAA")).toBe(0);
+    expect(Helpers.randIndex([0,0,0])).toBe(0);
+    expect(Helpers.randIndex([1])).toBe(0);
   });
 });
 
@@ -31,7 +32,7 @@ describe(".torf", function() {
 
   it("returns true or false at random (this test is for true)" , function() {
     spyOn(Math, "random").and.returnValue(0.3);
-    expect($gene.torf()).toBe(true);
+    expect(Helpers.torf()).toBe(true);
   });
 
   it("returns true or false at random (this test is for true)" , function() {
