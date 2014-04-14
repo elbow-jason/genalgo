@@ -92,7 +92,7 @@ describe("Organism.addChromosome", function() {
 
 describe("Mutate.point", function() {
 
-  var mut = new helpers.Mutate();
+  var mut = Mutate;
 
   it("given a symbol array and sequence, it causes a point mutation", function() {
     spyOn(Math, "random").and.returnValue(0.01);
