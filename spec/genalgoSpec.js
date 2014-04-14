@@ -7,8 +7,6 @@
 if(typeof require !== "undefined") {var gene = require(process.cwd() + '/lib/genalgo-app.js');}
 
 
-
-
 describe("Helpers.randIndex", function() {
 
   it("returns a random index from a given sequence or array" , function() {
@@ -85,12 +83,10 @@ describe("Organism.addChromosome", function() {
 
 describe("Mutate.point", function() {
 
-  var mut = Mutate;
-
   it("given a symbol array and sequence, it causes a point mutation", function() {
     expect(mut.point("AB","AB", 0, 1)).toBe("BB");
     expect(mut.point("AA","AB", 0, 1)).toBe("BA");
-    expect(mut.point("AA","CBA",1, 0)).toBe("AC");
+    expect(mut.point("AA","CBA", 1, 0)).toBe("AC");
     expect(mut.point("ABCD", "G", 0, 0)).toBe("GBCD");
   });
 });
@@ -98,19 +94,12 @@ describe("Mutate.point", function() {
 
 describe("Mutate.insert", function() {
 
-  var mut = Mutate();
 
   it("returns a random insertion of fragment of given sequence (seq + fragment + uence)", function() {
-    expect(mut.insert("AA", "BB", 1)).toMatch(/^[A]{2,4}$/);
-    expect(mut.insert("DGDGD")).toMatch(/^[DG]{5,10}$/);
+    expect(mut.insert("AA", "BB", 1)).toBe("ABBA");
+    expect(mut.insert("DDDD", "AA", 2)).toBe("DDAADD");
   });
 
-
-  it("returns a random insertion of fragment of given sequence (seq + fragment + uence)", function() {
-    spyOn(Math, "random").and.returnValue(0.9);
-    expect(mut.insert("AAAAAA")).toBe("AAAAAAA");
-    expect(mut.insert("DGDGD")).toBe("DGDGDD");
-  });
 });
 
 
