@@ -7,14 +7,7 @@
 if(typeof require !== "undefined") {var gene = require(process.cwd() + '/lib/genalgo-app.js');}
 
 
-describe("A suite is just a function", function() {
-  
-  it("and so is a spec", function() {
-    a = true;
 
-    expect(a).toBe(true);
-  });
-});
 
 describe("Helpers.randIndex", function() {
 
@@ -105,10 +98,10 @@ describe("Mutate.point", function() {
 
 describe("Mutate.insert", function() {
 
-  var mut = new helpers.Mutate();
+  var mut = Mutate();
 
   it("returns a random insertion of fragment of given sequence (seq + fragment + uence)", function() {
-    expect(mut.insert("AA")).toMatch(/^[A]{2,4}$/);
+    expect(mut.insert("AA", "BB", 1)).toMatch(/^[A]{2,4}$/);
     expect(mut.insert("DGDGD")).toMatch(/^[DG]{5,10}$/);
   });
 
@@ -124,7 +117,8 @@ describe("Mutate.insert", function() {
 
 describe("Mutate.sliceSeq", function() {
 
-  var mut = new helpers.Mutate();
+  var mut = Mutate();
+
   it("returns insertion of given fragment into given sequence at random index of sequence", function() {
     spyOn(Math, "random").and.returnValue(0.3);
     expect(mut.sliceSeq("AAAAAAAAA", "BBB")).toBe("AABBBAAAAAAA");
@@ -134,7 +128,7 @@ describe("Mutate.sliceSeq", function() {
 
 describe("Mutate.fragment", function() {
 
-  var mut = new helpers.Mutate();
+  var mut = Mutate();
   it("returns a random fragment, in reverse or forward, from a given sequence", function() {
     expect(mut.fragment("QQ")).toMatch(/^[Q]{1,2}$/);
   });
