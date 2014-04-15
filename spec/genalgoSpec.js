@@ -12,7 +12,7 @@ $gene.Organism = new Organism();
 $gene.Helpers = new Helpers();
 $gene.Mutate = new Mutate();
 $gene.Sequence = new Sequence();
-$gene.bioFunctions = new bioFunctions();
+$gene.BioFunctions = new BioFunctions();
 
 
 describe("$gene.Helpers.randIndex", function() {
@@ -187,10 +187,10 @@ describe("$gene.Organism.init", function() {
 
   it("initializes a new organism with a single sequence, a name, and some fuel (clobbers old organism props)", function() {
     
-    $gene.Organism.createOrganism('rabbit', 'AASSDDFF', 'chromosome1', 45);
-    expect($gene.Organism.organismName).toBe('rabbit');
-    expect($gene.Organism.chromosomes[0].seq).toEqual([ 'A', 'A', 'S', 'S', 'D', 'D', 'F', 'F' ]);
-    expect($gene.Organism.fuel).toBe(45);
+    var rabbit = $gene.Helpers.createOrganism('rabbit', 'AASSDDFF', 'chromosome1', 45);
+    expect(rabbit.organismName).toBe('rabbit');
+    expect(rabbit.chromosomes[0].seq).toEqual([ 'A', 'A', 'S', 'S', 'D', 'D', 'F', 'F' ]);
+    expect(rabbit.fuel).toBe(45);
     // expect($gene.Organism.chromosomes[0].organismName)toBe('rabbit');
   });
 });
@@ -201,19 +201,24 @@ describe("$gene.Organism.addChromosome", function() {
     var chrX = new Sequence();
     chrX.init('FFSSDDAA', "chromosomeX");
     $gene.Organism.addChromosome(chrX);
-    expect($gene.Organism.chromosomes[1].seq).toEqual([ 'F', 'F', 'S', 'S', 'D', 'D', 'A', 'A' ]);
+    expect($gene.Organism.chromosomes[0].seq).toEqual([ 'F', 'F', 'S', 'S', 'D', 'D', 'A', 'A' ]);
   });
 });
 
 
-describe("$gene.bioFunction.replicate", function() {
+describe("$gene.BioFunction.replicate", function() {
 
   it("copies an entire organism, as in a replication event (mitosis)", function() {
-    var rabbit = new $gene.Organism();
-    rabbit.createOrganism()
-    var mouse = $gene.bioFunctions.replicate();
-    expect(mouse.seq).toEqual([ 'A', 'A', 'S', 'S', 'D', 'D', 'F', 'F' ]);
-    expect(chromo.seqLength)  .toBe(8);
-    expect(chromo.seqName)    .toBe('chro1');
+
+    var rabbit  = $gene.Helpers        .createOrganism  ('rabbit', 'AASSDDFF', 'chromosome1', 45);
+    var mouse   = $gene.BioFunctions   .replicate       ( rabbit , 'mouse');
+
+    expect(mouse.chromosomes[0].seq)          .toEqual([ 'A', 'A', 'S', 'S', 'D', 'D', 'F', 'F' ]);
+    expect(mouse.chromosomes[0].seqLength)    .toBe(8);
+    expect(mouse.chromosomes[0].seqName)      .toBe('chromosome1');
+    rabbit.chromosomes = [];
+    expect(rabbit.chromosomes)                .toEqual([]);
+    expect(mouse.chromosomes[0].seq)          .toEqual([ 'A', 'A', 'S', 'S', 'D', 'D', 'F', 'F' ]);
+    expect(mouse.organismName)                .toBe('mouse');
   });
 });
