@@ -63,36 +63,28 @@ describe("$gene.Helpers.randReverse", function() {
 });
 
 
-describe("Organism.addChromosome", function() {
-  
-
-  beforeEach(function() {
-    var rabbit = new $gene.Organism();
-    rabbit.init('AASSDDFF', 'rabbit');
-    rabbit.addChromosome('FFSSDDAA');
-  });
+describe("Organism.init", function() {
 
   it("adds sequences to Organism.chromosomes", function() {
-    expect(rabbit.chromosomes[1]).toBe('FFSSDDAA');
+    
+    $gene.Organism.init('rabbit', 'AASSDDFF', 'chromosome1');
+    expect($gene.Organism.organismName).toBe('rabbit');
+    expect($gene.Organism.chromosomes[0].seq).toEqual([ 'A', 'A', 'S', 'S', 'D', 'D', 'F', 'F' ]);
+    // expect($gene.Organism.chromosomes[0].organismName)toBe('rabbit');
+  });
+});
+
+describe("Organism.addChromosome", function() {
+
+  it("adds sequences to Organism.chromosomes", function() {
+    var chrX = new Sequence();
+    chrX.init('FFSSDDAA', "chromosomeX");
+    $gene.Organism.addChromosome(chrX);
+    expect($gene.Organism.chromosomes[1].seq).toEqual([ 'F', 'F', 'S', 'S', 'D', 'D', 'A', 'A' ]);
   });
 });
 
 
-describe("Organism.addChromosome", function() {
-  
-
-  beforeEach(function() {
-    var rabbit = new $gene.Organism();
-    rabbit.init('AASSDDFF', 'rabbit');
-    rabbit.addChromosome('FFSSDDAA');
-  });
-
-  it("adds sequences to Organism.chromosomes", function() {
-    expect(rabbit.chromosomes[0]).toBe('AASSDDFF');
-    expect(rabbit.chromosomes[1]).toBe('FFSSDDAA');
-    expect(rabbit.organismName).toBe('rabbit');
-  });
-});
 
 
 
@@ -179,12 +171,25 @@ describe("$gene.Mutate.mutTranspose", function() {
   });
 });
 
+describe("$gene.Mutate.deletion", function() {
+
+  it("fractures a sequence and returns an array of the two broken pieces", function() {
+    spyOn(Math, "random").and.returnValue(0.6);
+    expect($gene.Mutate.mutTranspose("QQ", "AA")).toEqual([ "QA", "AQ"]);
+  });
+
+  it("fractures a sequence and returns an array of the two broken pieces", function() {
+    spyOn(Math, "random").and.returnValue(0.6);
+    expect($gene.Mutate.mutTranspose("ABCDEFG", "QRSTUVWXYZ")).toEqual([ "ABCDWXYZ", "QRSTUVEFG"]);
+  });
+});
+
 
 describe("Sequence.init", function() {
 
   it("generates and initializes new sequences", function() {
     var chromo = new $gene.Sequence.init('AASSDDFF', 'chro1');
-    expect(chromo.sequence).toBe('AASSDDFF');
+    expect(chromo.seq).toEqual([ 'A', 'A', 'S', 'S', 'D', 'D', 'F', 'F' ]);
     expect(chromo.seqLength)  .toBe(8);
     expect(chromo.seqName)    .toBe('chro1');
   });
