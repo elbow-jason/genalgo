@@ -7,73 +7,90 @@
 if(typeof require !== "undefined") {var gene = require(process.cwd() + '/lib/genalgo-app.js');}
 
 
-describe("Helpers.randIndex", function() {
+describe("$gene.Helpers.randIndex", function() {
 
   it("returns a random index from a given sequence or array" , function() {
     spyOn(Math, "random").and.returnValue(0.1);
-    expect(Helpers.randIndex("AAAA")).toBe(0);
-    expect(Helpers.randIndex([0,0,0])).toBe(0);
-    expect(Helpers.randIndex([1])).toBe(0);
+    expect($gene.Helpers.randIndex("AAAA")).toBe(0);
+    expect($gene.Helpers.randIndex([0,0,0])).toBe(0);
+    expect($gene.Helpers.randIndex([1])).toBe(0);
   });
 });
 
-describe("Helpers.torf", function() {
+describe("$gene.Helpers.torf", function() {
 
   it("returns true or false at random (this test is for true)" , function() {
     spyOn(Math, "random").and.returnValue(0.3);
-    expect(Helpers.torf()).toBe(true);
+    expect($gene.Helpers.torf()).toBe(true);
   });
 
   it("returns true or false at random (this test is for true)" , function() {
     spyOn(Math, "random").and.returnValue(0.7);
-    expect(Helpers.torf()).toBe(false);
+    expect($gene.Helpers.torf()).toBe(false);
   });
 });
 
 
-describe("Helpers.genBasesObj", function() {
+describe("$gene.Helpers.genBasesObj", function() {
 
   it("returns an object to decode sequences into functions (ribosome)", function() {
-    expect(Helpers.genBasesObj("AB",["func1", "func2"])).toEqual({"A" : "func1", "B" : "func2"});
+    expect($gene.Helpers.genBasesObj("AB",["func1", "func2"])).toEqual({"A" : "func1", "B" : "func2"});
   });
 });
 
 
-describe("Helpers.randSeq", function(){
+describe("$gene.Helpers.randSeq", function(){
 
   it("returns a random sequence given a desired length and a codex of available characters", function(){
-    expect(Helpers.randSeq(4, "A")).toBe("AAAA");
+    expect($gene.Helpers.randSeq(4, "A")).toBe("AAAA");
   });
 });
 
-describe("Helpers.randReverse", function() {
+describe("$gene.Helpers.randReverse", function() {
 
   it("returns a given sequence in reverse or forward, randomly (0.9)", function() {
     spyOn(Math, "random").and.returnValue(0.9);
-    expect(Helpers.randReverse("ABCD")).toBe("ABCD");
-    expect(Helpers.randReverse("XYZ")).toBe("XYZ");
+    expect($gene.Helpers.randReverse("ABCD")).toBe("ABCD");
+    expect($gene.Helpers.randReverse("XYZ")).toBe("XYZ");
   });
 
 
   it("returns a given sequence in reverse or forward, randomly (0.9)", function() {
     spyOn(Math, "random").and.returnValue(0.3);
-    expect(Helpers.randReverse("ABCD")).toBe("DCBA");
-    expect(Helpers.randReverse("XYZ")).toBe("ZYX");
+    expect($gene.Helpers.randReverse("ABCD")).toBe("DCBA");
+    expect($gene.Helpers.randReverse("XYZ")).toBe("ZYX");
   });
 });
 
 
 describe("Organism.addChromosome", function() {
-  var rabbit;
+  
 
   beforeEach(function() {
-    rabbit = new Organism('AASSDDFF');
+    var rabbit = new $gene.Organism();
+    rabbit.init('AASSDDFF', 'rabbit');
+    rabbit.addChromosome('FFSSDDAA');
+  });
+
+  it("adds sequences to Organism.chromosomes", function() {
+    expect(rabbit.chromosomes[1]).toBe('FFSSDDAA');
+  });
+});
+
+
+describe("Organism.addChromosome", function() {
+  
+
+  beforeEach(function() {
+    var rabbit = new $gene.Organism();
+    rabbit.init('AASSDDFF', 'rabbit');
     rabbit.addChromosome('FFSSDDAA');
   });
 
   it("adds sequences to Organism.chromosomes", function() {
     expect(rabbit.chromosomes[0]).toBe('AASSDDFF');
     expect(rabbit.chromosomes[1]).toBe('FFSSDDAA');
+    expect(rabbit.organismName).toBe('rabbit');
   });
 });
 
@@ -163,10 +180,10 @@ describe("$gene.Mutate.mutTranspose", function() {
 });
 
 
-describe("Sequence", function() {
+describe("Sequence.init", function() {
 
-  it("generates new sequence objects", function() {
-    var chromo = new Sequence('AASSDDFF', 'chro1');
+  it("generates and initializes new sequences", function() {
+    var chromo = new $gene.Sequence.init('AASSDDFF', 'chro1');
     expect(chromo.sequence).toBe('AASSDDFF');
     expect(chromo.seqLength)  .toBe(8);
     expect(chromo.seqName)    .toBe('chro1');
