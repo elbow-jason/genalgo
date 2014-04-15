@@ -7,6 +7,14 @@
 if(typeof require !== "undefined") {var gene = require(process.cwd() + '/lib/genalgo-app.js');}
 
 
+if (!($gene)) { var $gene = {};}
+$gene.Organism = new Organism();
+$gene.Helpers = new Helpers();
+$gene.Mutate = new Mutate();
+$gene.Sequence = new Sequence();
+$gene.bioFunctions = new bioFunctions();
+
+
 describe("$gene.Helpers.randIndex", function() {
 
   it("returns a random index from a given sequence or array" , function() {
@@ -59,28 +67,6 @@ describe("$gene.Helpers.randReverse", function() {
     spyOn(Math, "random").and.returnValue(0.3);
     expect($gene.Helpers.randReverse("ABCD")).toBe("DCBA");
     expect($gene.Helpers.randReverse("XYZ")).toBe("ZYX");
-  });
-});
-
-
-describe("Organism.init", function() {
-
-  it("adds sequences to Organism.chromosomes", function() {
-    
-    $gene.Organism.init('rabbit', 'AASSDDFF', 'chromosome1');
-    expect($gene.Organism.organismName).toBe('rabbit');
-    expect($gene.Organism.chromosomes[0].seq).toEqual([ 'A', 'A', 'S', 'S', 'D', 'D', 'F', 'F' ]);
-    // expect($gene.Organism.chromosomes[0].organismName)toBe('rabbit');
-  });
-});
-
-describe("Organism.addChromosome", function() {
-
-  it("adds sequences to Organism.chromosomes", function() {
-    var chrX = new Sequence();
-    chrX.init('FFSSDDAA', "chromosomeX");
-    $gene.Organism.addChromosome(chrX);
-    expect($gene.Organism.chromosomes[1].seq).toEqual([ 'F', 'F', 'S', 'S', 'D', 'D', 'A', 'A' ]);
   });
 });
 
@@ -185,11 +171,48 @@ describe("$gene.Mutate.deletion", function() {
 });
 
 
-describe("Sequence.init", function() {
+describe("$gene.Sequence.init", function() {
 
   it("generates and initializes new sequences", function() {
     var chromo = new $gene.Sequence.init('AASSDDFF', 'chro1');
     expect(chromo.seq).toEqual([ 'A', 'A', 'S', 'S', 'D', 'D', 'F', 'F' ]);
+    expect(chromo.seqLength)  .toBe(8);
+    expect(chromo.seqName)    .toBe('chro1');
+  });
+});
+
+
+
+describe("$gene.Organism.init", function() {
+
+  it("initializes a new organism with a single sequence, a name, and some fuel (clobbers old organism props)", function() {
+    
+    $gene.Organism.createOrganism('rabbit', 'AASSDDFF', 'chromosome1', 45);
+    expect($gene.Organism.organismName).toBe('rabbit');
+    expect($gene.Organism.chromosomes[0].seq).toEqual([ 'A', 'A', 'S', 'S', 'D', 'D', 'F', 'F' ]);
+    expect($gene.Organism.fuel).toBe(45);
+    // expect($gene.Organism.chromosomes[0].organismName)toBe('rabbit');
+  });
+});
+
+describe("$gene.Organism.addChromosome", function() {
+
+  it("adds sequences to Organism.chromosomes", function() {
+    var chrX = new Sequence();
+    chrX.init('FFSSDDAA', "chromosomeX");
+    $gene.Organism.addChromosome(chrX);
+    expect($gene.Organism.chromosomes[1].seq).toEqual([ 'F', 'F', 'S', 'S', 'D', 'D', 'A', 'A' ]);
+  });
+});
+
+
+describe("$gene.bioFunction.replicate", function() {
+
+  it("copies an entire organism, as in a replication event (mitosis)", function() {
+    var rabbit = new $gene.Organism();
+    rabbit.createOrganism()
+    var mouse = $gene.bioFunctions.replicate();
+    expect(mouse.seq).toEqual([ 'A', 'A', 'S', 'S', 'D', 'D', 'F', 'F' ]);
     expect(chromo.seqLength)  .toBe(8);
     expect(chromo.seqName)    .toBe('chro1');
   });
