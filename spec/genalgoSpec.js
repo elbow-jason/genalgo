@@ -12,7 +12,7 @@ $gene.Organism      = new Organism();
 $gene.Helpers       = new Helpers();
 $gene.Mutate        = new Mutate();
 $gene.Sequence      = new Sequence();
-$gene.biofunctions  = biofunctions;
+$gene.biofuncs      = biofuncs;
 
 
 describe("$gene.Helpers.randIndex", function() {
@@ -206,12 +206,12 @@ describe("$gene.Organism.addChromosome", function() {
 });
 
 
-describe("$gene.BioFunction.replicate", function() {
+describe("$gene.Biofuncs.replicate", function() {
 
   it("copies an entire organism, as in a replication event (mitosis)", function() {
 
-    var rabbit  = $gene.Helpers        .createOrganism  ('rabbit', 'AASSDDFF', 'chromosome1', 45);
-    var mouse   = $gene.biofunctions   .replicate       ( rabbit, 'mouse');
+    var rabbit  = $gene.Helpers         .createOrganism  ('rabbit', 'AASSDDFF', 'chromosome1', 45);
+    var mouse   = $gene.biofuncs         .replicate       ( rabbit, 'mouse');
 
     expect(mouse.chromosomes[0].seq)          .toEqual([ 'A', 'A', 'S', 'S', 'D', 'D', 'F', 'F' ]);
     expect(mouse.chromosomes[0].seqLength)    .toBe(8);
@@ -226,12 +226,12 @@ describe("$gene.BioFunction.replicate", function() {
 
 describe("$gene.BioFunction.ingest", function() {
 
-  it("one organism eats another and the eaten organism is consumed." , function() {
+  it("one organism eats another and the eaten organism is killed." , function() {
 
     var rabbit  = $gene.Helpers        .createOrganism  ('rabbit', 'AASSDDFF', 'chromosome1', 45);
     var mouse   = $gene.Helpers        .createOrganism  ('mouse' , 'AASSDDFF', 'chromosome1', 43);
 
-    $gene.biofunctions.ingest(rabbit, mouse);
+    $gene.biofuncs.ingest(rabbit, mouse);
     expect(rabbit.fuel).toBe(88);
     expect(mouse.fuel).toBe(0);
 
