@@ -65,8 +65,8 @@ describe("$gena.helpers.randReverse", function() {
 
   it("returns a given sequence in reverse or forward, randomly (0.9)", function() {
     spyOn(Math, "random").and.returnValue(0.3);
-    expect($gena.helpers.randReverse("ABCD")).toBe("DCBA");
-    expect($gena.helpers.randReverse("XYZ")).toBe("ZYX");
+    expect($gena.helpers.randReverse("A","B","C","D")).toEqual(["D","C","B","A"]);
+    expect($gena.helpers.randReverse(["X","Y","Z"])).toEqual("Z","Y","X");
   });
 });
 
