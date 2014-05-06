@@ -133,33 +133,28 @@ describe("$gena.mutate.fracture", function() {
 
 
 describe("$gena.mutate.mutTranspose", function() {
-  it("fractures a sequence and returns an array of the two broken pieces", function() {
+  it("transposes the ends of two chromosomes", function() {
     spyOn(Math, "random").and.returnValue(0.6);
     expect($gena.mutate.mutTranspose("QQ", "AA")).toEqual([ "QA", "AQ"]);
   });
 
-  it("fractures a sequence and returns an array of the two broken pieces", function() {
+  it("transposes the ends of two chromosomes", function() {
     spyOn(Math, "random").and.returnValue(0.6);
     expect($gena.mutate.mutTranspose("ABCDEFG", "QRSTUVWXYZ")).toEqual([ "ABCDWXYZ", "QRSTUVEFG"]);
   });
 });
 
 describe("$gena.mutate.deletion", function() {
-  it("fractures a sequence and returns an array of the two broken pieces", function() {
+  it("removes an index from a sequence", function() {
     spyOn(Math, "random").and.returnValue(0.6);
     expect($gena.mutate.mutTranspose("QQ", "AA")).toEqual([ "QA", "AQ"]);
   });
+});
 
 describe("$gena.mutate.duplicate", function() {
   it("copies a sequence and returns an array of two identical sequences", function() {
     spyOn(Math, "random").and.returnValue(0.6);
     expect($gena.mutate.duplicate("ABCDEFG")).toEqual(["ABCDEFG", "ABCDEFG"]);
-  });
-});
-
-  it("fractures a sequence and returns an array of the two broken pieces", function() {
-    spyOn(Math, "random").and.returnValue(0.6);
-    expect($gena.mutate.mutTranspose("ABCDEFG", "QRSTUVWXYZ")).toEqual([ "ABCDWXYZ", "QRSTUVEFG"]);
   });
 });
 
