@@ -94,7 +94,7 @@ describe("$gena.mutate.mutInsert", function() {
     expect($gena.mutate.mutInsert("AAAABAAAAA")).toMatch(/[AB]*/);
   });
 });
-
+ 
 
 describe("$gena.mutate.fragment", function() {
   it("returns a random fragment, in reverse or forward, from a given sequence", function() {
@@ -207,7 +207,7 @@ describe("$gena.Biofuncs.replicate", function() {
 });
 
 
-describe("$gena.BioFunction.ingest", function() {
+describe("$gena.Biofuncs.ingest", function() {
   it("one organism eats another and the eaten organism is killed." , function() {
 
     var rabbit  = $gena.helpers        .createOrganism  ('rabbit', 'AASSDDFF', 'chromosome1', 45);
