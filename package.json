@@ -1,7 +1,8 @@
 {
   "name": "genalgo",
-  "version": "0.0.0",
-  "description": "genetic algorithm framework",
+
+  "version": "0.0.1",
+  "description": "genetic algorithm framework with multiple chromosomes and developer defined genes (functions)",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +11,11 @@
     "type": "git",
     "url": "https://github.com/jlgoldb2/genalgo.git"
   },
-  "author": "",
+  "keywords": [
+    "genetic",
+    "algorithm"
+  ],
+  "author": "Jason Goldberger",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jlgoldb2/genalgo/issues"
